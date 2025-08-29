@@ -39,6 +39,6 @@ if ! command -v certbot >/dev/null 2>&1; then
   apt update && apt install -y certbot python3-certbot-apache
 fi
 
-certbot --apache -d $SOURCE -d www.$SOURCE
+certbot --apache -d $SOURCE -d www.$SOURCE --redirect
 
 echo "Done! $SOURCE is now redirecting to $TARGET"

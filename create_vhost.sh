@@ -54,6 +54,6 @@ if ! command -v certbot >/dev/null 2>&1; then
   apt update && apt install -y certbot python3-certbot-apache
 fi
 
-certbot --apache -d $DOMAIN -d www.$DOMAIN
+certbot --apache -d $DOMAIN -d www.$DOMAIN --redirect
 
 echo "Done! Your site is available at https://$DOMAIN/"

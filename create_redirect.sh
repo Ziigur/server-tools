@@ -15,6 +15,15 @@ SOURCE=$1
 TARGET=$2
 APACHE_CONF="/etc/apache2/sites-available/$SOURCE.conf"
 
+# Convert domain to punycode if needed
+if command -v idn2 >/dev/null 2>&1; then
+  SOURCE=$(idn2 "$1")
+else
+  echo "Please install idn2 (apt install idn2) for IDN support."
+  echo "This is required for non-ASCII domain names (using 'ä', 'ö', etc.)."
+  exit 1
+fi
+
 # Create Apache vhost config with redirect
 cat > $APACHE_CONF <<EOF
 <VirtualHost *:80>

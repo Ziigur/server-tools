@@ -15,6 +15,15 @@ DOMAIN=$1
 WEBROOT="/var/www/$DOMAIN"
 APACHE_CONF="/etc/apache2/sites-available/$DOMAIN.conf"
 
+# Convert domain to punycode if needed
+if command -v idn2 >/dev/null 2>&1; then
+  DOMAIN=$(idn2 "$1")
+else
+  echo "Please install idn2 (apt install idn2) for IDN support."
+  echo "This is required for non-ASCII domain names (using 'ä', 'ö', etc.)."
+  exit 1
+fi
+
 # Create web root directory
 mkdir -p $WEBROOT
 chown -R www-data:www-data $WEBROOT
